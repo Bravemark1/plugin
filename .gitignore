@@ -1,12 +1,86 @@
-*.class
+package me.bravemark1.bravepack;
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+import java.util.logging.Logger;
 
-# Package Files #
-*.jar
-*.war
-*.ear
+import org.bukkit.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.java.JavaPlugin;
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+public class BravePackMain extends JavaPlugin{
+	
+	public final Logger logger = Logger.getLogger("Minecraft");
+	public static BravePackMain plugin;
+	
+	@Override
+	public void onDisable(){
+		PluginDescriptionFile pdffile = this.getDescription();
+		this.logger.info(pdffile.getName() + " Has Been Disabled!");
+	}
+	
+	@Override
+	public void onEnable() {
+		PluginDescriptionFile pdffile = this.getDescription();
+		this.logger.info(ChatColor.GOLD + "[" + ChatColor.AQUA + pdffile.getName() + ChatColor.GOLD + "]" + ChatColor.YELLOW + " Version " + pdffile.getVersion() + " Has Been Enabled!");
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String CommandLabel, String[] args){
+		Player player = (Player) sender;
+		if(CommandLabel.equalsIgnoreCase("sendme")){
+			player.sendMessage(ChatColor.GOLD + "Sent");
+		}
+		return false;
+		
+	}
+
+	
+	@EventHandler
+	public void event(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		// create a new scoreboard with title
+		SimpleScoreboard scoreboard = new SimpleScoreboard("§6[§2Bravecraft§6]");
+		// text with custom score
+		scoreboard.add("§6~~~~~~~~~~~~~~~~~~~~~");
+		// also supports blank lines (up to 23 of them!)
+		scoreboard.blankLine();
+		scoreboard.add("§e§lNews:");
+		scoreboard.add("§7This server will soon be less laggy! =D");
+		// if you dont specify a score it will display them in the order you add them in
+		scoreboard.blankLine();
+		scoreboard.add("§e§lSite:");
+		scoreboard.add("§7http://www.bravecraft-server.enjin.com/");
+		scoreboard.blankLine();
+		scoreboard.add("§e§lVote:");
+		scoreboard.add("http://bravemarksgaming.webs.com/server");
+		scoreboard.blankLine();
+		// the text can be up to 48 characters long (including color codes)
+		scoreboard.add("§6~~~~~~~~~~~~~~~~~~~~~");
+		// call this to create the scoreboard, nothing will happen if you forget to call this
+		scoreboard.build();
+		// send the scoreboard to the player(s), takes an array
+		scoreboard.send(player);
+	}
+	
+	/** // create a single Scroller
+	Scroller scroller = new Scroller("&7This server will soon be less laggy! =D", 10, 5, '&');
+	 
+	// create a BukkitRunnable that runs every few ticks to update everyone's scoreboards
+	// ...
+	public void run()
+	{
+	    // get the next scroll
+	    String next = scroller.next();
+	 
+	    // loop through all players
+	    for (Player p : Bukkit.getOnlinePlayers())
+	    {
+	      // update their scoreboard with 'next'
+	    }
+	     
+	}*/
+
+}
